@@ -9,6 +9,8 @@ const res = await fetch("/api/cloudinary/sign",{
 method:"GET",
 });
 const {signature,timestamp} = (await res.json()) as CloudinaryResponse;
+console.log("Handler function is running for upload File");
+console.log(signature,timestamp)
 const formData = new FormData();
 formData.append("file", file);
 formData.append("api_key", "692272739484127");
@@ -25,5 +27,5 @@ const data = (await fetch(endpoint, {
   }).then((res) => res.json())) as {
     url: string;
   };
-  return data.url;
+  return data.url + "string it is";
 }

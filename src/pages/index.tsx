@@ -1,28 +1,14 @@
 import { SetStateAction, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Dropzone from "~/components/Dropzone";
-import { api } from "~/utils/api";
-import { uploadFile } from "~/utils/file";
+
 
 export default function Home() {
   const [files, setFiles] = useState<File[]>([]);
 
-  const handleUpload = () => {
-    try {
-      files.forEach((file)=>{
-        uploadFile(file);
-      })
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  
   return (
     <div>
-      <Dropzone className={""} files={[]} setFiles={function (value: SetStateAction<any[]>): void {
-        throw new Error("Function not implemented.");
-      } } disabled={false} />
-      <button onClick={handleUpload}>Upload</button>
+      <Dropzone  files={files} setFiles={setFiles} />
     </div>
   );
 }

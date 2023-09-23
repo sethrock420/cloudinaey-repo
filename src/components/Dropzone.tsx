@@ -1,22 +1,21 @@
 import {useCallback, useEffect, useState} from 'react'
 import {FileRejection, useDropzone} from 'react-dropzone'
-import { api } from '~/utils/api'; 
+import { uploadFile } from '~/utils/file';
 
 interface DropzoneProps {
-  className: string;
+  // className: string;
   files: any[];
   setFiles: React.Dispatch<React.SetStateAction<any[]>>;
-  disabled: boolean;
+  // disabled: boolean;
 }
 
-const Dropzone = ({className,files,setFiles,disabled}: DropzoneProps) =>{
+const Dropzone = ({files,setFiles}: DropzoneProps) =>{
   const [rejected,setRejectedFiles]=useState<FileRejection[]>([]);
   const [uploadStatus,setUploadStatus]=useState("");
 
   const onDrop = useCallback((acceptedFiles:File[],rejectedFiles:FileRejection[]) => {
     if(acceptedFiles.length){
       setFiles((previousFiles)=>[...previousFiles,...acceptedFiles.map((file)=>Object.assign(file,{preview:URL.createObjectURL(file)}))])
-      console.log(files);
     }
     if(rejectedFiles?.length){
       setRejectedFiles((previousFiles)=>[
@@ -45,13 +44,9 @@ const Dropzone = ({className,files,setFiles,disabled}: DropzoneProps) =>{
   const handleUpload = async()=>{
     setUploadStatus("Uploading....")
     try {
-      console.log("Pressed Upload Button")
-      console.log(files);
-      
-      // const formData = new FormData();
-      // files.forEach((image)=>formData.append("images",image))
-      // const res = await api.imageRouter.upload(formData);
-      // console.log(res);
+      files.forEach((file)=>{
+        uploadFile(file);
+      })
       setUploadStatus("Upload Succesful");
     } catch (error) {
       console.log("imageUpload" + error)
