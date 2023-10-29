@@ -9,6 +9,7 @@ export default function Home() {
   return (
     <div>
       <Dropzone  files={files} setFiles={setFiles} />
+      <h1>Dropzone Area</h1>
     </div>
   );
 }
